@@ -1,0 +1,5 @@
+crashpad/bin/attachments
+crashpad/bin/completed
+crashpad/bin/new
+crashpad/bin/pending
+crashpad/bin/settings.dat
