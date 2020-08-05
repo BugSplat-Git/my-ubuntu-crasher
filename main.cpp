@@ -21,9 +21,7 @@ StringType getExecutableDir(void);
 void crash(void);
 
 int main(int argc, char **argv) {
-	int i;
 	initializeCrashpad();
-	sleep(3);
 	crash();
 }
 
@@ -39,10 +37,10 @@ bool initializeCrashpad() {
 	FilePath handler(exeDir + "/../crashpad/bin/crashpad_handler");
 
 	// Directory where reports will be saved. Important! Must be writable or crashpad_handler will crash.
-	FilePath reportsDir(exeDir + "/../crashpad/bin");
+	FilePath reportsDir(exeDir);
 
 	// Directory where metrics will be saved. Important! Must be writable or crashpad_handler will crash.
-	FilePath metricsDir(exeDir + "/../crashpad/bin");
+	FilePath metricsDir(exeDir);
 
 	// Configure url with BugSplat’s public fred database. Replace 'fred' with the name of your BugSplat database.
 	StringType url = "http://fred.bugsplat.com/post/bp/crash/crashpad.php";
@@ -61,6 +59,11 @@ bool initializeCrashpad() {
 	vector<StringType> arguments; 
 	arguments.push_back("--no-rate-limit");
 
+	// File paths of attachments to be embedded in polyglot minidump file at crash time
+	vector<FilePath> attachments;
+	FilePath attachment(exeDir + "/attachment.txt");
+	attachments.push_back(attachment);
+
 	// Initialize Crashpad database
 	unique_ptr<CrashReportDatabase> database = CrashReportDatabase::Initialize(reportsDir);
 	if (database == NULL) return false;
@@ -72,7 +75,7 @@ bool initializeCrashpad() {
 
 	// Start crash handler
 	CrashpadClient *client = new CrashpadClient();
-	bool status = client->StartHandler(handler, reportsDir, metricsDir, url, annotations, arguments, true, true);
+	bool status = client->StartHandler(handler, reportsDir, metricsDir, url, annotations, arguments, true, false, attachments);
 	return status;
 }
 

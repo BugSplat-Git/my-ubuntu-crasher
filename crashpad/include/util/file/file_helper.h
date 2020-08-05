@@ -1,4 +1,4 @@
-// Copyright 2014 The Crashpad Authors. All rights reserved.
+// Copyright 2020 The Crashpad Authors. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef CRASHPAD_CLIENT_SIMULATE_CRASH_H_
-#define CRASHPAD_CLIENT_SIMULATE_CRASH_H_
+#ifndef CRASHPAD_UTIL_FILE_FILE_HELPER_H_
+#define CRASHPAD_UTIL_FILE_FILE_HELPER_H_
 
-#include "build/build_config.h"
+#include "util/file/file_reader.h"
+#include "util/file/file_writer.h"
 
-#if defined(OS_APPLE)
-#include "client/simulate_crash_mac.h"
-#elif defined(OS_WIN)
-#include "client/simulate_crash_win.h"
-#elif defined(OS_LINUX) || defined(OS_ANDROID)
-#include "client/simulate_crash_linux.h"
-#endif
+namespace crashpad {
 
-#endif  // CRASHPAD_CLIENT_SIMULATE_CRASH_H_
+//! \brief Copy the file content from file_reader to file_writer
+void CopyFileContent(FileReaderInterface* file_reader,
+                     FileWriterInterface* file_writer);
+
+}  // namespace crashpad
+
+#endif  // CRASHPAD_UTIL_FILE_FILE_HELPER_H_

@@ -8,7 +8,7 @@ This sample demonstrates Linux crash reporting with BugSplat and Crashpad. MyUbu
 2. Clone this repository
 3. Build main.cpp with debug information and a build ID and link the Crashpad libraries using clang
 ```bash
-clang++ $PROJECT_DIR/main.cpp \
+clang++ -pthread $PROJECT_DIR/main.cpp \
     $CRASHPAD_DIR/lib/libclient.a \
     $CRASHPAD_DIR/lib/libutil.a \
     $CRASHPAD_DIR/lib/libbase.a \
@@ -26,7 +26,7 @@ $CRASHPAD_DIR/tools/dump_syms $PROJECT_DIR/out/$MODULE_NAME > $SYM_FILE
 5. Upload the generated .sym file to BugSplat
 ```bash
 export SYM_FILE=$OUT_DIR/$MODULE_NAME.sym
-$CRASHPAD_DIR/tools/sym_upload $SYM_FILE "https://$BUGSPLAT_DATABASE.bugsplat.com/post/bp/symbol/breakpadsymbols.php?appName=$BUGSPLAT_APP_NAME&appVer=$BUGSPLAT_APP_VERSION"
+$CRASHPAD_DIR/tools/symupload $SYM_FILE "https://$BUGSPLAT_DATABASE.bugsplat.com/post/bp/symbol/breakpadsymbols.php?appName=$BUGSPLAT_APP_NAME&appVer=$BUGSPLAT_APP_VERSION"
 ```
 6. Run the output executable to generate a crash report
 7. Log into BugSplat using our public account fred@bugsplat.com and password Flintstone

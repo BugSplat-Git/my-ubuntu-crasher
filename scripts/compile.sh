@@ -1,7 +1,7 @@
 #!/bin/bash
 source exports.sh
 
-clang++ $PROJECT_DIR/main.cpp \
+clang++ -pthread $PROJECT_DIR/main.cpp \
     $CRASHPAD_DIR/lib/libclient.a \
     $CRASHPAD_DIR/lib/libutil.a \
     $CRASHPAD_DIR/lib/libbase.a \
