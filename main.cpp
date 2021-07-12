@@ -43,7 +43,7 @@ bool initializeCrashpad() {
 	FilePath metricsDir(exeDir);
 
 	// Configure url with BugSplat’s public fred database. Replace 'fred' with the name of your BugSplat database.
-	StringType url = "http://fred.bugsplat.com/post/bp/crash/crashpad.php";
+	StringType url = "https://fred.bugsplat.com/post/bp/crash/crashpad.php";
 
 	// Metadata that will be posted to the server with the crash report map
 	map<StringType, StringType> annotations;
