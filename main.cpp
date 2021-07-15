@@ -43,7 +43,7 @@ bool initializeCrashpad() {
 	FilePath metricsDir(exeDir);
 
 	// Configure url with BugSplat’s public fred database. Replace 'fred' with the name of your BugSplat database.
-	StringType url = "http://fred.bugsplat.com/post/bp/crash/crashpad.php";
+	StringType url = "https://fred.bugsplat.com/post/bp/crash/crashpad.php";
 
 	// Metadata that will be posted to the server with the crash report map
 	map<StringType, StringType> annotations;
@@ -59,7 +59,7 @@ bool initializeCrashpad() {
 	vector<StringType> arguments; 
 	arguments.push_back("--no-rate-limit");
 
-	// File paths of attachments to be embedded in polyglot minidump file at crash time
+	// File paths of attachments to be uploaded with the minidump file at crash time - default bundle limit is 2MB
 	vector<FilePath> attachments;
 	FilePath attachment(exeDir + "/attachment.txt");
 	attachments.push_back(attachment);

@@ -1,4 +1,6 @@
 #!/bin/bash
+export CRASHPAD_CHECKOUT_DIR=$HOME/Desktop/github/crashpad
+export CRASHPAD_BUILD_DIR=$CRASHPAD_CHECKOUT_DIR/out/Default
 export PROJECT_DIR=$HOME/Desktop/github/myUbuntuCrasher
 export CRASHPAD_DIR=$PROJECT_DIR/crashpad
 export OUT_DIR=$PROJECT_DIR/out
