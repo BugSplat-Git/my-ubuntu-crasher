@@ -37,8 +37,9 @@ bool initializeCrashpad(string dbName, string appName, string appVersion)
     // Directory where metrics will be saved. Important! Must be writable or crashpad_handler will crash.
     FilePath metricsDir(exeDir);
 
+
     // Configure url with your BugSplat database
-    string url = "http://" + dbName + ".bugsplat.com/post/bp/crash/crashpad.php";
+    string url = "https://" + dbName + ".bugsplat.com/post/bp/crash/crashpad.php";
 
     // Metadata that will be posted to BugSplat
     map<string, string> annotations;
