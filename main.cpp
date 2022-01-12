@@ -55,7 +55,7 @@ bool initializeCrashpad(string dbName, string appName, string appVersion)
 	vector<string> arguments; 
 	arguments.push_back("--no-rate-limit");
 
-	// File paths of attachments to be uploaded with the minidump file at crash time - default bundle limit is 2MB
+	// File paths of attachments to be uploaded with the minidump file at crash time - default bundle limit is 20MB
 	vector<FilePath> attachments;
 	FilePath attachment(exeDir + "/attachment.txt");
 	attachments.push_back(attachment);  
