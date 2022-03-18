@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "client/crashpad_client.h"
 #include "client/crash_report_database.h"
 #include "client/settings.h"
@@ -59,6 +60,15 @@ bool initializeCrashpad(string dbName, string appName, string appVersion)
 	vector<FilePath> attachments;
 	FilePath attachment(exeDir + "/attachment.txt");
 	attachments.push_back(attachment);  
+
+	// Initialize Crashpad database
+	unique_ptr<CrashReportDatabase> database = CrashReportDatabase::Initialize(reportsDir);
+	if (database == NULL) return false;
+
+	// Enable automated crash uploads
+	Settings *settings = database->GetSettings();
+	if (settings == NULL) return false;
+	settings->SetUploadsEnabled(true);
 
     // Start crash handler
     CrashpadClient *client = new CrashpadClient();
