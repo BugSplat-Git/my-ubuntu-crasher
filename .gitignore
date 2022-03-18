@@ -3,4 +3,4 @@ crashpad/bin/completed
 crashpad/bin/new
 crashpad/bin/pending
 crashpad/bin/settings.dat
-out
+/out
