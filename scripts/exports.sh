@@ -1,5 +1,5 @@
 #!/bin/bash
-export CRASHPAD_CHECKOUT_DIR=$HOME/Desktop/crashpad
+export CRASHPAD_CHECKOUT_DIR=$HOME/Desktop/crashpad/crashpad
 export CRASHPAD_BUILD_DIR=$CRASHPAD_CHECKOUT_DIR/out/Default
 export PROJECT_DIR=$HOME/Desktop/github/my-ubuntu-crasher
 export CRASHPAD_DIR=$PROJECT_DIR/crashpad
