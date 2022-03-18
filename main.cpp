@@ -60,6 +60,15 @@ bool initializeCrashpad(string dbName, string appName, string appVersion)
 	FilePath attachment(exeDir + "/attachment.txt");
 	attachments.push_back(attachment);  
 
+	// Initialize Crashpad database
+	unique_ptr<CrashReportDatabase> database = CrashReportDatabase::Initialize(reportsDir);
+	if (database == NULL) return false;
+
+	// Enable automated crash uploads
+	Settings *settings = database->GetSettings();
+	if (settings == NULL) return false;
+	settings->SetUploadsEnabled(true);
+
     // Start crash handler
     CrashpadClient *client = new CrashpadClient();
     bool status = client->StartHandler(handler, reportsDir, metricsDir, url, annotations, arguments, true, true, attachments);
