@@ -13,11 +13,11 @@
 
 ## Introduction 👋
 
-This sample demonstrates Linux C++ crash reporting with [BugSplat](https://bugsplat.com) and [Crashpad](https://chromium.googlesource.com/crashpad/crashpad/+/master/README.md). The `my-ubuntu-crasher` sample includes a [prebuilt version](https://github.com/BugSplat-Git/my-ubuntu-crasher/tree/main/crashpad/lib) of Crashpad as well as the [Breakpad](https://chromium.googlesource.com/breakpad/breakpad/) tools dump_syms and symupload.
+This sample demonstrates Linux C++ crash reporting with [BugSplat](https://bugsplat.com) and [Crashpad](https://chromium.googlesource.com/crashpad/crashpad/+/master/README.md). The `my-ubuntu-crasher` sample includes a [prebuilt version](https://github.com/BugSplat-Git/my-ubuntu-crasher/tree/main/crashpad/lib) of Crashpad and [symbol-upload](https://github.com/BugSPlat-Git/symbol-upload) to create `.sym` files and upload them to BugSplat.
 
 ## Steps 🥾
 
-1. Ensure git, python, llvm and clang are installed on your machine
+1. Ensure git, python, llvm, and clang are installed on your machine
 2. Clone this repository
 3. Build main.cpp with debug information and a build ID and link the Crashpad libraries using clang
 
@@ -35,23 +35,34 @@ clang++ -pthread $PROJECT_DIR/main.cpp \
     -Wl,--build-id
 ```
 
-4. Generate .sym files for the output executable
+4. Generate and upload symbols to BugSplat using symbol-upload and the `--dumpSyms` flag
 
 ```bash
-export SYM_FILE=$OUT_DIR/$MODULE_NAME.sym
-$CRASHPAD_DIR/tools/dump_syms $PROJECT_DIR/out/$MODULE_NAME > $SYM_FILE
+$CRASHPAD_DIR/tools/symbol-upload-linux -b $BUGSPLAT_DATABASE \
+    -a $BUGSPLAT_APP_NAME \
+    -v $BUGSPLAT_APP_VERSION \
+    -u $BUGSPLAT_EMAIL \
+    -p $BUGSPLAT_PASSWORD \
+    -d $PROJECT_DIR/out \
+    -f $MODULE_NAME \
+    --dumpSyms
 ```
-5. Upload the generated .sym file to BugSplat
+
+5. Run the output executable to generate a crash report
 
 ```bash
-export SYM_FILE=$OUT_DIR/$MODULE_NAME.sym
-$CRASHPAD_DIR/tools/symupload $SYM_FILE "https://$BUGSPLAT_DATABASE.bugsplat.com/post/bp/symbol/breakpadsymbols.php?appName=$BUGSPLAT_APP_NAME&appVer=$BUGSPLAT_APP_VERSION"
+./out/myUbuntuCrasher
+
+# [10939:10939:20240705,155021.774184:ERROR file_io_posix.cc:144] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
+# [10939:10939:20240705,155021.774253:ERROR file_io_posix.cc:144] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
+# Segmentation fault
 ```
 
-6. Run the output executable to generate a crash report
-7. Log into BugSplat using our public account fred@bugsplat.com and password Flintstone
-8. Navigate to the Crashes page and click the link in the ID column to see a detailed crash report
+7. Log into [BugSplat](https://bugsplat.com) using our public account `fred@bugsplat.com` and password `Flintstone`
+8. Navigate to the [Crashes]([https://app.bugsplat.com/v2/crashes](https://app.bugsplat.com/v2/crashes?c0=appName&f0=CONTAINS&v0=myUbuntuCrasher&database=Fred)) page and click the link in the ID column to see a detailed crash report
+
+<img width="1728" alt="myUbuntuCrasher crash on BugSplat" src="https://github.com/BugSplat-Git/my-ubuntu-crasher/assets/2646053/07c97d9c-29ea-486b-808e-785a6fc2597d">
 
 ## Other ℹ️
 
-Make sure that every time you build you increment the version number and generate/upload new symbol files. If you fail to generate and upload symbol files your crash reports will not contain file names and source line numbers.
+Please ensure that you increment the version number every time you build and generate/upload new symbol files. If you fail to create and upload symbol files, your crash reports will not contain file names and source line numbers.
