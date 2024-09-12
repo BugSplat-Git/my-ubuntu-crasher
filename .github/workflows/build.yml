@@ -41,7 +41,7 @@ jobs:
         npm i -g node-dump-syms 
 
     - name: Upload Symbols
-      uses: BugSplat-Git/symbol-upload@b488976f0946ee3f79f3d231fdc74d305da69b97
+      uses: BugSplat-Git/symbol-upload@main
       with:
         clientId: "${{ secrets.SYMBOL_UPLOAD_CLIENT_ID }}"
         clientSecret: "${{ secrets.SYMBOL_UPLOAD_CLIENT_SECRET }}"
