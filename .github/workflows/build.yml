@@ -33,6 +33,12 @@ jobs:
         bash attachment.sh
         ls $PROJECT_DIR/out
 
+    # TODO BG not sure why this is required, but after fiddling with node-pre-gyp for a while I can't get it to work without this
+    - name: Install node-dump-syms
+      if: runner.os == 'Linux'
+      run: |
+        npm i -g node-dump-syms 
+
     - name: Upload Symbols
       uses: BugSplat-Git/symbol-upload@b488976f0946ee3f79f3d231fdc74d305da69b97
       with:
