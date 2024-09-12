@@ -44,3 +44,4 @@ jobs:
         files: "myUbuntuCrasher"
         directory: "${{ env.PROJECT_DIR }}/out"
         dumpSyms: true
+        node-version: "22"
