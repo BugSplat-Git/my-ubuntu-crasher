@@ -37,6 +37,7 @@ jobs:
     - name: Install node-dump-syms
       if: runner.os == 'Linux'
       run: |
+        npm i -g @mapbox/node-pre-gyp
         npm i -g node-dump-syms 
 
     - name: Upload Symbols
