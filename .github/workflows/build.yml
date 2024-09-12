@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: BugSplat-Git/my-ubuntu-crasher
         path: my-ubuntu-crasher
@@ -32,14 +32,6 @@ jobs:
         bash handler.sh
         bash attachment.sh
         ls $PROJECT_DIR/out
-
-    # TODO BG try and remove this when node-dump-syms goes to 10.
-    # I think this is needed because node-pre-gyp is not a dev dependency in 9.2.2.
-    - name: Install node-dump-syms
-      if: runner.os == 'Linux'
-      run: |
-        npm i -g @mapbox/node-pre-gyp 
-        npm i -g node-dump-syms     
 
     - name: Upload Symbols
       uses: BugSplat-Git/symbol-upload@main
