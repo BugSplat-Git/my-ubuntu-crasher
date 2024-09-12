@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: BugSplat-Git/my-ubuntu-crasher
+        path: my-ubuntu-crasher
+
+    - name: Set PROJECT_DIR environment variable
+      run: echo "PROJECT_DIR=${{ github.workspace }}/my-ubuntu-crasher" >> $GITHUB_ENV
+
+    - name: Run script
+      working-directory: ${{ env.PROJECT_DIR }}
+      run: |
+        #!/bin/bash
+        cd scripts
+        source exports.sh
+        echo $OUT_DIR
+        echo $PROJECT_DIR
+        echo $CRASHPAD_DIR
+        echo $MODULE_NAME
+        mkdir -p $OUT_DIR
+        bash compile.sh
+        bash handler.sh
+        bash attachment.sh
+        ls $PROJECT_DIR/out
+
+    # TODO BG not sure why this is required, but after fiddling with node-pre-gyp for a while I can't get it to work without this
+    - name: Install node-dump-syms
+      if: runner.os == 'Linux'
+      run: |
+        npm i -g @mapbox/node-pre-gyp
+        npm i -g node-dump-syms 
+
+    - name: Upload Symbols
+      uses: BugSplat-Git/symbol-upload@main
+      with:
+        clientId: "${{ secrets.SYMBOL_UPLOAD_CLIENT_ID }}"
+        clientSecret: "${{ secrets.SYMBOL_UPLOAD_CLIENT_SECRET }}"
+        database: "${{ secrets.BUGSPLAT_DATABASE }}"
+        application: "my-ubuntu-crasher"
+        version: "1.0.0"
+        files: "myUbuntuCrasher"
+        directory: "${{ env.PROJECT_DIR }}/out"
+        dumpSyms: true
+        node-version: "22"
