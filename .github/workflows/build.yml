@@ -23,6 +23,10 @@ jobs:
         #!/bin/bash
         cd scripts
         source exports.sh
+        echo $OUT_DIR
+        echo $PROJECT_DIR
+        echo $CRASHPAD_DIR
+        echo $MODULE_NAME
         mkdir -p $OUT_DIR
         bash compile.sh
         bash handler.sh
