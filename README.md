@@ -17,7 +17,7 @@ This sample demonstrates Linux C++ crash reporting with [BugSplat](https://bugsp
 
 ## Steps 🥾
 
-1. Ensure git, python, llvm, and clang are installed on your machine
+1. Ensure `git`, `llvm`, `build-essential`, and `clang` are installed on your machine
 2. Clone this repository
 3. Build main.cpp with debug information and a build ID and link the Crashpad libraries using clang
 
