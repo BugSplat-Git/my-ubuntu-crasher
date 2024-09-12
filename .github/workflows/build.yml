@@ -34,12 +34,13 @@ jobs:
         ls $PROJECT_DIR/out
 
     - name: Upload Symbols
-      uses: BugSplat-Git/symbol-upload@main
+      uses: BugSplat-Git/symbol-upload@d9ec6410f7230e35997a79ad8690bbf111cc6fcb
       with:
         clientId: "${{ secrets.SYMBOL_UPLOAD_CLIENT_ID }}"
         clientSecret: "${{ secrets.SYMBOL_UPLOAD_CLIENT_SECRET }}"
         database: "${{ secrets.BUGSPLAT_DATABASE }}"
         application: "my-ubuntu-crasher"
         version: "1.0.0"
-        files: "**/*.sym"
+        files: "myUbuntuCrasher"
         directory: "${{ env.PROJECT_DIR }}/out"
+        dumpSyms: true
