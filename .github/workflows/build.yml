@@ -33,6 +33,12 @@ jobs:
         bash attachment.sh
         ls $PROJECT_DIR/out
 
+    # TODO BG try and remove this when node-dump-syms goes to 10.
+    # I think this is needed because node-pre-gyp is not a dev dependency in 9.2.2.
+    - name: Install node-dump-syms
+      if: runner.os == 'Linux'
+      run: npm install -g @bugsplat/node-dump-syms     
+
     - name: Upload Symbols
       uses: BugSplat-Git/symbol-upload@d9ec6410f7230e35997a79ad8690bbf111cc6fcb
       with:
