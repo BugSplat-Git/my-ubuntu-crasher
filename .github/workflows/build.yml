@@ -31,6 +31,7 @@ jobs:
         bash compile.sh
         bash handler.sh
         bash attachment.sh
+        ls $PROJECT_DIR/out
 
     - name: Upload Symbols
       uses: BugSplat-Git/symbol-upload@main
