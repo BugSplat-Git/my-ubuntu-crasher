@@ -7,6 +7,6 @@ $CRASHPAD_DIR/tools/symbol-upload-linux -b $BUGSPLAT_DATABASE \
     -u $BUGSPLAT_EMAIL \
     -p $BUGSPLAT_PASSWORD \
     -d $PROJECT_DIR/out \
-    -f $MODULE_NAME \
+    -f "{$MODULE_NAME,*.so.2}" \
     --dumpSyms
 
